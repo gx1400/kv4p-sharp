@@ -7,6 +7,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "kv4p-sharp-lib", "kv4p-shar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RadioGUI", "RadioGUI\RadioGUI.csproj", "{833C55A9-5DE4-4B46-8F4A-63EA59325E17}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kv4p-net8-lib", "kv4p-net8-lib\kv4p-net8-lib.csproj", "{443907DB-1E67-4090-A8FF-44249308C845}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E4537948-6C7D-4444-91FD-1A6405BF85F6}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kv4p-net8-app", "kv4p-net8-app\kv4p-net8-app.csproj", "{B2C16A25-A826-4610-9F7C-6B58E7288EA6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +30,14 @@ Global
 		{833C55A9-5DE4-4B46-8F4A-63EA59325E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{833C55A9-5DE4-4B46-8F4A-63EA59325E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{833C55A9-5DE4-4B46-8F4A-63EA59325E17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{443907DB-1E67-4090-A8FF-44249308C845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{443907DB-1E67-4090-A8FF-44249308C845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{443907DB-1E67-4090-A8FF-44249308C845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{443907DB-1E67-4090-A8FF-44249308C845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C16A25-A826-4610-9F7C-6B58E7288EA6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C16A25-A826-4610-9F7C-6B58E7288EA6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C16A25-A826-4610-9F7C-6B58E7288EA6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C16A25-A826-4610-9F7C-6B58E7288EA6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

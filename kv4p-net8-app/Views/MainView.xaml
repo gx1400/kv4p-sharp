@@ -1,0 +1,291 @@
+﻿<Window
+    x:Class="kv4p_net8_app.Views.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behavior="clr-namespace:kv4p_net8_app.Behavior"
+    xmlns:converters="clr-namespace:kv4p_net8_app.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:kv4p_net8_app.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:validationRule="clr-namespace:kv4p_net8_app.ValidationRule"
+    xmlns:viewModels="clr-namespace:kv4p_net8_app.ViewModels"
+    Width="800"
+    Height="700"
+    MinWidth="600"
+    MinHeight="600"
+    d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <Style
+            x:Key="ConnectionButtonStyle"
+            BasedOn="{StaticResource MaterialDesignRaisedLightButton}"
+            TargetType="Button">
+            <Setter Property="Margin" Value="10" />
+        </Style>
+        <Style
+            x:Key="FilterToggleStyle"
+            BasedOn="{StaticResource MaterialDesignSwitchToggleButton}"
+            TargetType="ToggleButton" />
+        <converters:BooleanToBackgroundColorConverter x:Key="BooleanToBackgroundColorConverter" />
+        <converters:BooleanToConnectedStringConverter x:Key="BooleanToConnectedStringConverter" />
+        <validationRule:DecimalFormatValidationRule x:Key="DecimalFormatValidationRule" />
+    </Window.Resources>
+    <DockPanel>
+        <Expander
+            DockPanel.Dock="Right"
+            ExpandDirection="Right"
+            IsExpanded="True">
+            <Expander.Header>
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    Text="Settings">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="90" />
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+
+            </Expander.Header>
+            <StackPanel Width="300" Height="{Binding Path=ActualHeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Expander}}}">
+                <materialDesign:Chip
+                    Margin="10,10,10,10"
+                    HorizontalAlignment="Stretch"
+                    Content="Connection"
+                    DockPanel.Dock="Top">
+                    <materialDesign:Chip.Icon>
+                        <materialDesign:PackIcon Kind="Connection" />
+                    </materialDesign:Chip.Icon>
+                </materialDesign:Chip>
+                <ComboBox
+                    Margin="20,10,20,10"
+                    BorderBrush="DarkGray"
+                    BorderThickness="1"
+                    IsEnabled="{Binding IsComboBoxEnabled}"
+                    ItemsSource="{Binding ComPorts}"
+                    SelectedItem="{Binding SelectedComPort}" />
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <Button
+                        Command="{Binding ConnectCommand}"
+                        Content="Connect"
+                        IsEnabled="{Binding SerialPortConnected, Converter={StaticResource InvertBooleanConverter}}"
+                        Style="{StaticResource ConnectionButtonStyle}" />
+                    <Button
+                        Command="{Binding DisconnectCommand}"
+                        Content="Disconnect"
+                        IsEnabled="{Binding SerialPortConnected}"
+                        Style="{StaticResource ConnectionButtonStyle}" />
+                </StackPanel>
+
+                <Label Content="{Binding SerialPortConnected}" />
+                <materialDesign:Chip
+                    Margin="10,10,10,10"
+                    HorizontalAlignment="Stretch"
+                    Content="Frequency"
+                    DockPanel.Dock="Top">
+                    <materialDesign:Chip.Icon>
+                        <materialDesign:PackIcon Kind="SineWave" />
+                    </materialDesign:Chip.Icon>
+                </materialDesign:Chip>
+                <Grid Margin="15,5,5,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        Text="Squelch" />
+                    <DockPanel
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="10,0,10,0">
+                        <Slider
+                            Width="180"
+                            Height="30"
+                            Margin="10,0,10,0"
+                            AutoToolTipPlacement="None"
+                            DockPanel.Dock="Left"
+                            IsEnabled="True"
+                            IsSnapToTickEnabled="true"
+                            Maximum="9"
+                            Minimum="0"
+                            Orientation="Horizontal"
+                            Style="{StaticResource MaterialDesignDiscreteHorizontalSlider}"
+                            TickFrequency="1"
+                            TickPlacement="BottomRight"
+                            Value="{Binding SquelchLevel, Mode=TwoWay}" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            DockPanel.Dock="Right"
+                            Text="{Binding SquelchLevel}"
+                            TextAlignment="Right" />
+                    </DockPanel>
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="Offset" />
+                    <ComboBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="20,5,20,5"
+                        VerticalAlignment="Center"
+                        BorderBrush="DarkGray"
+                        BorderThickness="1"
+                        ItemsSource="{Binding OffsetDirections}"
+                        Loaded="ComboBox_Loaded" />
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="Tone" />
+                    <ComboBox
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="20,5,20,5"
+                        VerticalAlignment="Center"
+                        BorderBrush="DarkGray"
+                        BorderThickness="1"
+                        DisplayMemberPath="Value"
+                        ItemsSource="{Binding CtcssTones}"
+                        Loaded="ComboBox_Loaded_1"
+                        SelectedValuePath="Key" />
+
+                </Grid>
+
+
+
+
+
+                <materialDesign:Chip
+                    Margin="10,10,10,10"
+                    HorizontalAlignment="Stretch"
+                    Content="Filters"
+                    DockPanel.Dock="Top">
+                    <materialDesign:Chip.Icon>
+                        <materialDesign:PackIcon Kind="Filter" />
+                    </materialDesign:Chip.Icon>
+                </materialDesign:Chip>
+
+                <Grid Margin="50,5,20,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <ToggleButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        IsChecked="{Binding FilterEmphasis, Mode=TwoWay}"
+                        Style="{StaticResource FilterToggleStyle}" />
+                    <ToggleButton
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        IsChecked="{Binding FilterHighPass, Mode=TwoWay}"
+                        Style="{StaticResource FilterToggleStyle}" />
+                    <ToggleButton
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        IsChecked="{Binding FilterLowPass, Mode=TwoWay}"
+                        Style="{StaticResource FilterToggleStyle}" />
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Content="Emphasis" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Content="High Pass" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Content="Low Pass" />
+                </Grid>
+
+
+
+                <materialDesign:Chip
+                    Margin="10,10,10,10"
+                    HorizontalAlignment="Stretch"
+                    Content="Audio"
+                    DockPanel.Dock="Top">
+                    <materialDesign:Chip.Icon>
+                        <materialDesign:PackIcon Kind="Headphones" />
+                    </materialDesign:Chip.Icon>
+                </materialDesign:Chip>
+
+            </StackPanel>
+        </Expander>
+
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="15" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="2*" />
+                </Grid.RowDefinitions>
+                <TextBox
+                    Grid.Row="1"
+                    VerticalContentAlignment="Center"
+                    behavior:FontSizeAutoFitBehavior.EnableAutoFit="True"
+                    FontWeight="Light"
+                    TextAlignment="Center">
+                    <TextBox.Text>
+                        <Binding
+                            FallbackValue="123.456"
+                            Mode="TwoWay"
+                            Path="FrequencyMhz"
+                            StringFormat="F3"
+                            UpdateSourceTrigger="PropertyChanged"
+                            ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <validationRule:DecimalFormatValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+
+                    </TextBox.Text>
+                </TextBox>
+
+            </Grid>
+            <TextBox
+                Grid.Row="1"
+                Height="Auto"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Top"
+                HorizontalScrollBarVisibility="Disabled"
+                IsReadOnly="True"
+                Text="{Binding DisplayText, Mode=OneWay}"
+                TextChanged="OutputTextBox_TextChanged"
+                TextWrapping="Wrap"
+                VerticalScrollBarVisibility="Auto" />
+
+            <Border Grid.Row="2" Background="{Binding SerialPortConnected, Converter={StaticResource BooleanToBackgroundColorConverter}, FallbackValue=false}">
+                <TextBlock HorizontalAlignment="Center" Text="{Binding SerialPortConnected, Converter={StaticResource BooleanToConnectedStringConverter}}" />
+            </Border>
+
+
+        </Grid>
+
+    </DockPanel>
+</Window>
